@@ -1,0 +1,2 @@
+%{"elixir_talk": {:hex, :elixir_talk, "1.1.1", "fc44976aaea9561dd936b927d15838cb9fda456ad3c84cea2682e73bb24949ac", [:mix], [{:yaml_elixir, "~> 1.0.0", [hex: :yaml_elixir, optional: false]}]},
+  "yaml_elixir": {:hex, :yaml_elixir, "1.0.0", "a0b703148aa8926a08fc14619c83e9cdf7555ff7e8bb9e74c08aa716eaf8c609", [:mix], []}}
