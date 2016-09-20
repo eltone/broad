@@ -8,12 +8,13 @@ defmodule Watcher do
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(Root, [])
+      supervisor(Watcher.Root, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Watcher.Supervisor]
+    opts = [strategy: :one_for_one]
     supervise(children, opts)
+    Supervisor.start_link(children, opts)
   end
 end
