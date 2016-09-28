@@ -27,6 +27,5 @@ defmodule Watcher.Root do
   Send a command to every beanstalk
   """
   def send_command do
-  
   end
 end

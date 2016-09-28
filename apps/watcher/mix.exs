@@ -18,7 +18,7 @@ defmodule Watcher.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :elixir_talk],
      mod: {Watcher, []}]
   end
 
@@ -36,6 +36,10 @@ defmodule Watcher.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:elixir_talk, "~> 1.1"}]
+    [
+      {:elixir_talk, "~> 1.1"},
+      {:yamerl, "0.3.2"},
+      {:credo, "~> 0.4", only: [:dev, :test]}
+    ]
   end
 end
