@@ -1,4 +1,4 @@
-defmodule Watcher.Stats do
+defmodule Watcher.Aggregator do
 
   @moduledoc """
   Functions for getting statistic from a collection of beanstalkd servers
