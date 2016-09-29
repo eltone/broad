@@ -2,7 +2,7 @@ defmodule Watcher.Beanstalk do
   def parse_connection(beanstalk) do
     case String.split(beanstalk, ":") do
       [host, port] -> [host: to_charlist(host), port: parse_port(port)]
-      [host] -> [host: to_charlist(host)]
+      [host] -> [host: to_charlist(host), port: 11300]
     end
   end
 

@@ -6,7 +6,7 @@ defmodule Watcher.BeanstalkTest do
   end
 
   test "can parse a host string without a port" do
-    assert [host: 'myhost'] == Watcher.Beanstalk.parse_connection("myhost")
+    assert [host: 'myhost', port: 11300] == Watcher.Beanstalk.parse_connection("myhost")
   end
 
   test "opens and closes a connection when running a command" do
@@ -17,5 +17,14 @@ defmodule Watcher.BeanstalkTest do
     assert_received {:callback_run, true, pid}
     monitor_ref = Process.monitor(pid)
     assert_receive {:DOWN, ^monitor_ref, :process, ^pid, :normal}
+  end
+
+  test "can connect when only the host is specified" do
+    Watcher.Beanstalk.parse_connection("localhost")
+    |> Watcher.Beanstalk.run_and_close(fn (pid) ->
+      send(self, {:callback_run, Process.alive?(pid)})
+    end)
+
+    assert_received {:callback_run, true}
   end
 end
