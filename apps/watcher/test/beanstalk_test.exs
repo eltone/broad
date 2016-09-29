@@ -10,6 +10,12 @@ defmodule Watcher.BeanstalkTest do
   end
 
   test "opens and closes a connection when running a command" do
-    # TODO: use callback to do something with the pid
+    Watcher.Beanstalk.run_and_close([host: 'localhost', port: 11300], fn (pid) ->
+      send(self, {:callback_run, Process.alive?(pid), pid})
+    end)
+
+    assert_received {:callback_run, true, pid}
+    monitor_ref = Process.monitor(pid)
+    assert_receive {:DOWN, ^monitor_ref, :process, ^pid, :normal}
   end
 end
