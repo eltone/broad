@@ -7,3 +7,6 @@ config :logger,
   level: :info,
   format: "$date $time [$level] $metadata$message\n",
   metadata: [:user_id]
+
+config :watcher,
+  node_repo: Watcher.EnvNodeRepo

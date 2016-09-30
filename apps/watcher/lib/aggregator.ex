@@ -28,7 +28,7 @@ defmodule Watcher.Aggregator do
 
   defp merge_node(k, _v1, v2) when k in @unsummable_keys, do: v2
 
-  defp merge_node(k, v1, v2) when is_map(v1) and is_map(v2), do: merge_type(v1, v2)
+  defp merge_node(_k, v1, v2) when is_map(v1) and is_map(v2), do: merge_type(v1, v2)
 
   defp merge_node(_k, v1, v2) when is_number(v1) and is_number(v2) do
     v1 + v2
