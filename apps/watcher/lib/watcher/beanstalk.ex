@@ -13,6 +13,13 @@ defmodule Watcher.Beanstalk do
     res
   end
 
+  def parse_and_connect(beanstalk) do
+    {:ok, pid} = beanstalk
+    |> parse_connection
+    |> ElixirTalk.connect
+    pid
+  end
+
   defp parse_port(port_string) do
     {port, ""} = Integer.parse(port_string)
     port

@@ -12,15 +12,12 @@ defmodule Watcher.Root do
   end
 
   def init(_args) do
+    beanstalks = ["127.0.0.1:11300"]
     children = [
-      worker(Watcher.Poller, [], restart: :transient)
+      worker(Watcher.Poller, [beanstalks], restart: :permanent)
     ]
 
-    supervise(children, strategy: :simple_one_for_one)
-  end
-
-  def add_pinger do
-    Supervisor.start_child(@name, ["127.0.0.1:11300"])
+    supervise(children, strategy: :one_for_one)
   end
 
   @doc """
