@@ -10,3 +10,5 @@ config :logger,
 
 config :watcher,
   node_repo: Watcher.EnvNodeRepo
+
+import_config "#{Mix.env}.exs"
