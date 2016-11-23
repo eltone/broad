@@ -1,8 +1,8 @@
-defmodule Watcher.Mixfile do
+defmodule BroadTcp.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :watcher,
+    [app: :broad_tcp,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -18,8 +18,8 @@ defmodule Watcher.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :elixir_talk],
-     mod: {Watcher, []}]
+    [applications: [:logger, :ranch, :watcher],
+     mod: {BroadTcp, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -37,9 +37,8 @@ defmodule Watcher.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:elixir_talk, "~> 1.1"},
-      {:yamerl, "0.3.2"},
-      {:credo, "~> 0.5.3", only: [:dev, :test]}
+      {:ranch, "~> 1.2"},
+      {:watcher, in_umbrella: true}
     ]
   end
 end
