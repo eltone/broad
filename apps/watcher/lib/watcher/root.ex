@@ -14,7 +14,8 @@ defmodule Watcher.Root do
   def init(_args) do
     beanstalks = ["127.0.0.1:11300"]
     children = [
-      worker(Watcher.Poller, [beanstalks], restart: :permanent)
+      worker(Watcher.Pool, [Watcher.Pool, beanstalks], restart: :permanent),
+      worker(Watcher.Poller, [Watcher.Pool], restart: :permanent)
     ]
 
     supervise(children, strategy: :one_for_one)

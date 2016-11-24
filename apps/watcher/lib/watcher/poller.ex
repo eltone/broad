@@ -4,24 +4,21 @@ defmodule Watcher.Poller do
 
   @interval Application.get_env(:watcher, :polling_interval, 5000)
 
-  def start_link(beanstalks) do
-    GenServer.start_link(__MODULE__, beanstalks)
+  def start_link(pool) do
+    GenServer.start_link(__MODULE__, pool)
   end
 
-  def init(beanstalks) do
-    pids = beanstalks
-    |> Enum.map(&Watcher.Beanstalk.parse_and_connect/1)
+  def init(pool) do
     {:ok, _} = GenEvent.start_link(name: StatsEventManager)
     schedule_check
-    {:ok, %{beanstalks: pids}}
+    {:ok, pool}
   end
 
-  def handle_info(:check, %{beanstalks: beanstalks} = state) do
-    stats = beanstalks
-    |> Watcher.Stats.summary
+  def handle_info(:check, pool) do
+    stats = Watcher.Pool.cmd(:stats, pool)
     :ok = GenEvent.notify(StatsEventManager, {:stats, stats})
     schedule_check
-    {:noreply, state}
+    {:noreply, pool}
   end
 
   defp schedule_check do
