@@ -16,7 +16,7 @@ defmodule BroadTcp.Handler do
         res = data
         |> String.split
         |> parse
-        transport.send(socket, "Bing Bong\r\n")
+        transport.send(socket, res)
         loop(socket, transport)
       {:error, reason} ->
         Logger.error("receive error #{reason}")
@@ -25,10 +25,16 @@ defmodule BroadTcp.Handler do
   end
 
   defp parse(["stats"]) do
-    
+    Watcher.Pool.cmd(:stats)
+    |> format
   end
 
   defp parse(["stats-tube", tube_name]) do
     Logger.info("hey! " <> tube_name)
+  end
+
+  defp format(map) do
+    map
+    |> Enum.map(fn ({k,v}) -> [k, ": ", to_string(v), "\r\n"] end)
   end
 end

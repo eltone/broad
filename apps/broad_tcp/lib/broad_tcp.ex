@@ -9,7 +9,7 @@ defmodule BroadTcp do
     # Define workers and child supervisors to be supervised
     children = [
       # Starts a worker by calling: BroadTcp.Worker.start_link(arg1, arg2, arg3)
-      worker(BroadTcp.Worker, []),
+      worker(BroadTcp.Worker, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
