@@ -4,7 +4,6 @@ defmodule Watcher.Pool do
   Maintains connections to a pool of beanstalkd servers
   """
 
-
   def start_link(name, beanstalks) do
     GenServer.start_link(__MODULE__, beanstalks, [name: name])
   end
@@ -26,8 +25,13 @@ defmodule Watcher.Pool do
 
   # Server
 
-  def handle_call({:cmd, :stats}, _from, %{beanstalks: pids} = state) do
-    agg_stats = Watcher.Stats.summary(pids)
+  def handle_call({:cmd, cmd}, _from, %{beanstalks: pids} = state) do
+    agg_stats = pids
+    |> Enum.map(&ElixirTalk.Connect.call(&1, format_args(cmd)))
+    |> Watcher.Aggregator.summary
     {:reply, agg_stats, state}
   end
+
+  defp format_args([cmd | []]), do: String.to_atom(cmd)
+  defp format_args([cmd | opts]), do: List.to_tuple([String.to_atom(cmd) | opts])
 end

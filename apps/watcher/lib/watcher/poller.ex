@@ -15,7 +15,7 @@ defmodule Watcher.Poller do
   end
 
   def handle_info(:check, pool) do
-    stats = Watcher.Pool.cmd(:stats, pool)
+    stats = Watcher.Pool.cmd(["stats"], pool)
     :ok = GenEvent.notify(StatsEventManager, {:stats, stats})
     schedule_check
     {:noreply, pool}
