@@ -1,4 +1,8 @@
 defmodule BroadTcp.Handler do
+  @moduledoc """
+  Ranch handler for incoming beanstalkd commands
+  """
+
   require Logger
 
   def start_link(ref, socket, transport, opts) do
@@ -11,7 +15,7 @@ defmodule BroadTcp.Handler do
   end
 
   def loop(socket, transport) do
-    case transport.recv(socket, 0, 60000) do
+    case transport.recv(socket, 0, 60_000) do
       {:ok, data} ->
         res = data
         |> String.split
@@ -31,7 +35,8 @@ defmodule BroadTcp.Handler do
     kick-job stats-job list-tubes list-tube-used list-tubes-watched)
 
   defp parse([cmd | _opts] = input) when cmd in @supported_commands do
-    yaml = Watcher.Pool.cmd(input)
+    yaml = input
+    |> Watcher.Pool.cmd
     |> format
     line_with_yaml = ["---\n", yaml]
     res_length = IO.iodata_length(line_with_yaml)

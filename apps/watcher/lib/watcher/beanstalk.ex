@@ -1,4 +1,8 @@
 defmodule Watcher.Beanstalk do
+  @moduledoc """
+  Contains functions for setting up beanstalkd connections
+  """
+
   def parse_connection(beanstalk) do
     case String.split(beanstalk, ":") do
       [host, port] -> [host: to_charlist(host), port: parse_port(port)]

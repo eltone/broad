@@ -1,4 +1,8 @@
 defmodule Watcher.Poller do
+  @moduledoc """
+  Intermittently sends stats to StatsEventManager
+  """
+
   use GenServer
   require Logger
 

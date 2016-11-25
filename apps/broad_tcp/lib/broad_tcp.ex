@@ -1,4 +1,8 @@
 defmodule BroadTcp do
+  @moduledoc """
+  Serves aggregated beanstalkd requests from a pool of servers
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html

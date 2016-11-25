@@ -1,9 +1,9 @@
 defmodule Watcher.Root do
-  use Supervisor
-
   @moduledoc """
   The beanstalk pool root supervisor
   """
+
+  use Supervisor
 
   @name Watcher.Root
 

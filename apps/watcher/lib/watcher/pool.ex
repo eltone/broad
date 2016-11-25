@@ -1,8 +1,9 @@
 defmodule Watcher.Pool do
-  use GenServer
   @moduledoc """
   Maintains connections to a pool of beanstalkd servers
   """
+
+  use GenServer
 
   def start_link(name, beanstalks) do
     GenServer.start_link(__MODULE__, beanstalks, [name: name])
