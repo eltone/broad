@@ -47,8 +47,13 @@ defmodule BroadTcp.Handler do
     "UNKNOWN_COMMAND\r\n"
   end
 
-  defp format(map) do
-    map
+  defp format(enum) when is_map(enum) do
+    enum
     |> Enum.map(fn ({k,v}) -> [k, ": ", to_string(v), "\n"] end)
+  end
+
+  defp format(enum) when is_list(enum) do
+    enum
+    |> Enum.map(fn (x) -> ["- ", to_string(x), "\n"] end)
   end
 end

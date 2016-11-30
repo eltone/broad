@@ -42,4 +42,16 @@ defmodule Watcher.AggregatorTest do
 
     assert expected == Watcher.Aggregator.summary(input)
   end
+
+  test "can create a union of sets from all nodes" do
+    input = [
+      ["default", "tube2", "tube1", "tube3"],
+      ["default", "tube1", "tube3", "tube4", "tube5"],
+      ["default", "tube3"],
+    ]
+
+    expected = ["default", "tube1", "tube2", "tube3", "tube4", "tube5"]
+
+    assert expected == Watcher.Aggregator.union(input)
+  end
 end

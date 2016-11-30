@@ -12,6 +12,12 @@ defmodule Watcher.Aggregator do
     |> Enum.reduce(%{}, &merge_type/2)
   end
 
+  def union(enumerable) do
+    enumerable
+    |> Enum.reduce(MapSet.new, &union_nodes/2)
+    |> MapSet.to_list
+  end
+
   @unsummable_keys ~w(uptime rusage-utime binlog-current-index max-job-size version rusage-stime
     binlog-oldest-index pid binlog-max-size)
 
@@ -35,4 +41,6 @@ defmodule Watcher.Aggregator do
   end
 
   defp merge_node(_k, _v1, _v2), do: "n/a"
+
+  defp union_nodes(x, acc), do: MapSet.union(MapSet.new(x), acc)
 end
